@@ -11,16 +11,24 @@ class App extends Component {
     images:[],
     // search:''
   };
-  componentDidMount(){
-    axios.get('https://pixabay.com/api/?q=cat&page=1&key=21803950-62f4c86011510fd15fe85c0d2&image_type=photo&orientation=horizontal&per_page=12',)
-     .then(response =>{
-       this.setState({images:response.data.hits,})
-     });
-  }
+  //  componentDidMount(){
+  //  axios.get('https://pixabay.com/api/?q=cat&page=1&key=21803950-62f4c86011510fd15fe85c0d2&image_type=photo&orientation=horizontal&per_page=12')
+  //    .then(response =>{
+  //      this.setState({images:response.data.hits,})
+  //    });
+  //  }
+
+     onChangeQuery=query =>{
+      axios.get(`https://pixabay.com/api/?q=${query}&page=1&key=21803950-62f4c86011510fd15fe85c0d2&image_type=photo&orientation=horizontal&per_page=12`)
+      .then(response =>{
+        this.setState({images:response.data.hits,})
+      });
+    }
+     
      render(){
 
        return <div>
-         <Searchbar />
+         <Searchbar onSubmit={this.onChangeQuery}/>
        {/* <ImageGallery /> */}
 
        <ul className="ImageGallery">
