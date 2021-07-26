@@ -2,25 +2,29 @@ import React, { Component } from "react";
 
 
 class Searchbar extends Component{ 
-  state = {query: ''}
+  state = { query: '' };
 //const Searchbar=()=>(
 
 
-handleChange =element=>{
-  this.setState({query: element.currentTarget.value})
-}
+handleChange = element => {
+  this.setState({ query: element.currentTarget.value, })
+};
 handleSubmit=element=>{
-  element.preventDafault();
+  element.preventDefault();
+  console.log(this.state)
   this.props.onSubmit(this.state.query)
-  this.setState({query:''})
+  this.setState({ query:'' })
+  
 }
+
+
 
   render(){
     return (
-      <div>
+      // <div>
       <header className="Searchbar">
   <form className="SearchForm" onSubmit={this.handleSubmit}>
-    <button type="submit" className="SearchForm-button">
+    <button type="submit" onSubmit={this.handleSubmit} className="SearchForm-button">
       <span className="SearchForm-button-label">Search</span>
     </button>
 
@@ -35,9 +39,9 @@ handleSubmit=element=>{
     />
   </form>
   
-</header>
-</div>
-    )
+    </header>
+      // </div>
+    );
 
 
   }

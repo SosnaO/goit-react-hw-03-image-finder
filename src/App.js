@@ -8,32 +8,35 @@ import Searchbar from './components/Searchbar/Searchbar'
 
 class App extends Component {
   state={
-    images:[],
+    hits: [],
     // search:''
   };
   //  componentDidMount(){
   //  axios.get('https://pixabay.com/api/?q=cat&page=1&key=21803950-62f4c86011510fd15fe85c0d2&image_type=photo&orientation=horizontal&per_page=12')
   //    .then(response =>{
-  //      this.setState({images:response.data.hits,})
+  //      this.setState({
+  //        images:response.data.hits,
+  //       })
   //    });
   //  }
 
-     onChangeQuery=query =>{
+     onChangeQuery = query => {
       axios.get(`https://pixabay.com/api/?q=${query}&page=1&key=21803950-62f4c86011510fd15fe85c0d2&image_type=photo&orientation=horizontal&per_page=12`)
-      .then(response =>{
-        this.setState({images:response.data.hits,})
+      .then(response => {
+        this.setState({ hits:response.data.hits,})
       });
-    }
+      //console.log(query)
+    };
      
      render(){
 
-       return <div>
+       return (<div>
          <Searchbar onSubmit={this.onChangeQuery}/>
        {/* <ImageGallery /> */}
 
        <ul className="ImageGallery">
     {/* <ImageGalleryItem /> */}
-    {this.state.images.map(({ id, webformatURL })=>(
+    {this.state.hits.map(({ id, webformatURL })=>(
       <li className="ImageGalleryItem" key={id}> 
   <img src={webformatURL} alt="" className="ImageGalleryItem-image" />
 </li>
@@ -50,7 +53,7 @@ class App extends Component {
 </ul>
        </div>
 
-       
+       )
        
      
      }
