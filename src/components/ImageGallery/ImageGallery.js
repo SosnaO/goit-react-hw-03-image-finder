@@ -1,14 +1,10 @@
 import React from 'react';
-import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem'
-//import axios from 'axios';
-const ImageGallery=()=>(
-<ul className="ImageGallery">
-    {/* <ImageGalleryItem /> */}
-    
-</ul>
+import PropTypes from 'prop-types';
 
-)
-
-
-
+const ImageGallery = ({ children }) => (
+  <ul className="ImageGallery">{children}</ul>
+);
+ImageGallery.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 export default ImageGallery;

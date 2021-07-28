@@ -8,6 +8,7 @@ import Searchbar from './components/Searchbar/Searchbar'
  //import Button from './components/Button/Button'
 // import ImageGallery from './components/ImageGallery/ImageGallery'
 import Loader from "react-loader-spinner";
+import Modal from './components/Modal/Modal'
 
 class App extends Component {
   state={
@@ -15,8 +16,12 @@ class App extends Component {
     currentPage: 1,
     searchQuery: '',
     isLoading: false,
-    // error: null,
-   
+    error: null,
+    showModal: false,
+    largeImageURL:'',
+    url: '',
+    alt: '',
+
   };
   //  componentDidMount(){
   //  axios.get('https://pixabay.com/api/?q=cat&page=1&key=21803950-62f4c86011510fd15fe85c0d2&image_type=photo&orientation=horizontal&per_page=12')
@@ -37,7 +42,7 @@ class App extends Component {
          searchQuery: query,
           currentPage: 1,
            hits: [],
-          //  error: null,
+          error: null,
           });
       //  this.fetchHits();
       };
@@ -62,29 +67,27 @@ class App extends Component {
           top: document.documentElement.scrollHeight,
           behavior: 'smooth',
         });
+        
+        // {this.state.error && <h1>The search is empty</h1>}
       })
-      //  .catch(error => this.setState({ error }))
+       .catch(error => this.setState({ error }))
        .finally(() => this.setState({ isLoading: false }));
-
-      //   window.scrollTo({
-      //   top: document.documentElement.scrollHeight,
-      //   behavior: 'smooth',
-   
-      // });
-      
-
+  
 
     };
-    // window.scrollTo({
-    //   top: document.documentElement.scrollHeight,
-    //   behavior: 'smooth',
-    // });
+    
+    toggleModal = () => {
+      this.setState(({ showModal }) => ({
+        showModal: !showModal,
+      }))
+    }
+  
 
-
-
+    
      render(){
 
        return (<div>
+         {/* <button type="button" onClick={this.toggleModal}>Откріть модалку</button> */}
          {/* {this.state.error && <h1>The search is empty</h1>} */}
          <Searchbar onSubmit={this.onChangeQuery}/>
        {/* <ImageGallery /> */}
@@ -104,15 +107,9 @@ class App extends Component {
     {/* <ImageGalleryItem /> */}
     {this.state.hits.map(({ id, webformatURL })=>(
       <li className="ImageGalleryItem" key={id}> 
-  <img src={webformatURL} alt="" className="ImageGalleryItem-image" />
+  <img  src={webformatURL} alt="" className="ImageGalleryItem-image" />
 </li>
-
-
-
     ))
-
-
-
     }
         
 </ul>
@@ -128,9 +125,13 @@ class App extends Component {
         {this.state.hits.length > 0 && !this.state.isLoading && (
         <button type="button" onClick={this.fetchHits}>
           Load more</button>
-          )}
+          )};
 
-
+          {this.setState.showModal && 
+          (<Modal onClose={this.toggleModal} onClick={this.handleImageClick}>
+          <img src={this.state.largeImageURL} alt={this.state.tag}/>
+         </Modal>)};
+          {/* <button type="button" onClick={this.toggleModal}>Закріть модалку</button> */}
           
 
 
@@ -146,30 +147,5 @@ class App extends Component {
 
 
 }
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-// const loaderStyles = {
-//   position: 'fixed',
-//   top: '50%',
-//   left: '50%',
-//   transform: 'translate(-50%,-50%)',
-// };
+
 export default App;
