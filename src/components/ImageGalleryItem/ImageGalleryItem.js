@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 const ImageGalleryItem = ({ alt, src, url, onClick }) => (
   <li className="ImageGalleryItem">
-    <img className="ImageGalleryItem-image"
+    <img
+      className="ImageGalleryItem-image"
       onClick={onClick}
       src={src}
       alt={alt}
